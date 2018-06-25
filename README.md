@@ -3,6 +3,6 @@ This repository contains all the code of the exercises made for the Machine Lear
 
 It's a Pycharm project that includes a virtual environment with the necessary libraries installed (venv folder).
 
-* **pandas folder** contains a brief introduction to pandas library
-* **tensorflow folder** contains code with the basic operations
+* **pandas folder** contains a brief introduction to pandas library.
+* **tensorflow folder** contains code with the basic operations.
 
