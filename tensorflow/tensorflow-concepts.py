@@ -2,6 +2,7 @@ import tensorflow as tf
 
 
 def simple_tensorflow_program():
+    """Simple TensorFlow introduction program."""
     # Create a graph
     g = tf.Graph()
 
@@ -20,6 +21,7 @@ def simple_tensorflow_program():
 
 
 def exercise_third_operand():
+    """Function that sums three operands."""
     # Create a graph
     g = tf.Graph()
 
@@ -40,6 +42,7 @@ def exercise_third_operand():
 
 
 def exercise_vector_addition():
+    """Function that sums two vectors."""
     # Create a graph
     g = tf.Graph()
 
@@ -61,6 +64,7 @@ def exercise_vector_addition():
 
 
 def exercise_tensor_shapes():
+    """Exercise to practise with tensor shapes."""
     # Create a graph
     g = tf.Graph()
 
@@ -79,6 +83,7 @@ def exercise_tensor_shapes():
 
 
 def exercise_broadcasting():
+    """Exercise to practise with broadcasting."""
     # Create a graph
     g = tf.Graph()
 
@@ -97,6 +102,7 @@ def exercise_broadcasting():
 
 
 def exercise_matrix_multiplication():
+    """Exercise to practise with matrix multiplication."""
     # Create a graph
     g = tf.Graph()
 
@@ -118,6 +124,7 @@ def exercise_matrix_multiplication():
 
 
 def exercise_tensor_reshaping():
+    """Exercise to practise with tensor reshaping."""
     # Create a graph
     g = tf.Graph()
 
@@ -156,7 +163,9 @@ def exercise_tensor_reshaping():
 
 
 def exercise1():
-    # Reshape two tensors in order to multiply them
+    """Exercise that reshape two tensors in order to multiply them."""
+    print(exercise1.__doc__)
+
     # Create a graph
     g = tf.Graph()
 
@@ -181,6 +190,7 @@ def exercise1():
 
 
 def exercise_variables_init_assign():
+    """Exercise to practise with variables."""
     # Create a graph
     g = tf.Graph()
 
@@ -203,11 +213,14 @@ def exercise_variables_init_assign():
 
 
 def exercise2():
+    """Simulation of a dice rolls."""
+    print(exercise2.__doc__)
+
     # Create a graph
     g = tf.Graph()
 
     with g.as_default(), tf.Session() as sess:
-        # Place dice throws inside two separate 10x1 matrices
+        # Place dice roll inside two separate 10x1 matrices
         dice1 = tf.Variable(tf.random_uniform([10, 1], minval=1, maxval=7,
                                               dtype=tf.int32))
         dice2 = tf.Variable(tf.random_uniform([10, 1], minval=1, maxval=7,
@@ -227,13 +240,41 @@ def exercise2():
         print("The dice matrix simulation is\n", matrix.eval())
 
 
-# simple_tensorflow_program()
-# exercise_third_operand()
-# exercise_vector_addition()
-# exercise_tensor_shapes()
-# exercise_broadcasting()
-# exercise_matrix_multiplication()
-exercise_tensor_reshaping()
-exercise1()
-exercise_variables_init_assign()
-exercise2()
+def ask_execution(prompt, retries=3, reminder='Please select one available option'):
+    """Function to select the exercise to run."""
+    options = {0: simple_tensorflow_program,
+               1: exercise_third_operand,
+               2: exercise_vector_addition,
+               3: exercise_tensor_shapes,
+               4: exercise_broadcasting,
+               5: exercise_matrix_multiplication,
+               6: exercise_tensor_reshaping,
+               7: exercise1,
+               8: exercise_variables_init_assign,
+               9: exercise2,
+               }
+
+    while True:
+        print("Select one of the available exercises to run:")
+        for i in range(10):
+            print("[%i]" % i, options[i].__doc__)
+
+        user_input = int(input(prompt))
+        if int(user_input) in range(10):
+            options[user_input]()
+            user_input = input("New execution?:")
+            if user_input in ('y', 'ye', 'yes'):
+                pass
+            elif user_input in ('n', 'no', 'nop', 'nope'):
+                return False
+            else:
+                raise ValueError("invalid user response: must be 'yes' or 'no'")
+        else:
+            print("The chosen it's invalid")
+            retries = retries - 1
+        if retries < 0:
+            raise ValueError("invalid user response")
+        print(reminder)
+
+
+ask_execution('Enter your option:')
