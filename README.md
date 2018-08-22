@@ -5,4 +5,5 @@ It's a Pycharm project that includes a virtual environment with the necessary li
 
 * **pandas folder** contains a brief introduction to pandas library.
 * **tensorflow folder** contains code with the basic operations.
+* **python folder** contains code for learning the basic python operations.
 
