@@ -49,6 +49,7 @@ def default_argument_values():
     # ask_ok('Do you really want to quit?')
     # Giving one of the optional arguments
     # ask_ok('OK to overwrite the file?', 2)
+    print(ask_ok.__doc__)
     ask_ok('OK to overwrite the file?', 2, 'Come on, only yes or no!')
 
 
@@ -77,4 +78,90 @@ def default_mutable_object():
     print(f1(3))
 
 
-default_mutable_object()
+def keyword_arguments():
+    """Exercise to practise with keyword arguments."""
+    def parrot(voltage, state='a stiff', action='voom'):
+        print("The action is", action, end='\n')
+        print("The voltage is", voltage, end='\n')
+        print("The state is", state, end='\n')
+
+    # Valid calls
+    parrot(1000)
+    print('\n')
+    parrot(voltage=1000)
+    print('\n')
+    parrot(action='NO', voltage=1000)
+    print('\n')
+    parrot(1000, state='Open')
+
+    # Invalid calls
+    # parrot()  # Required argument missing
+    # parrot(10, voltage=100)  # Duplicate value for same argument
+    # Non-keyword argument after a keyword argument
+    # parrot(voltage=100, 'Closed')
+
+
+def keyword_arguments_advanced():
+    """Exercise to practise with keyword arguments making use of Tuples and Dictionaries."""
+    def cheeseshop(kind, *arguments, **keywords):
+        print("-- Do you have any", kind, "?")
+        print("-- I'm sorry, we're all out of", kind)
+        for arg in arguments:
+            print(arg)
+        print("-" * 40)
+        for kw in keywords:
+            print(kw, ":", keywords[kw])
+
+    cheeseshop("Apple", "Sorry,sir", "I'm really sorry",
+               shoopkeeper="Michael", client="George")
+    print('\n')
+
+    # Calling with unpacked argument lists
+    dict = {"shoopkeeper": "Michael", "client": "George"}
+    tuple = ("Sorry,sir", "I'm really sorry")
+
+    cheeseshop("Apple", *tuple, **dict)
+    print('\n')
+
+    def concat(*args, sep='/'):
+        """Concatenation of the argument followed by a slash."""
+        return sep.join(args)
+
+    print(concat.__doc__)
+    print(concat("Mercury", "Venus", "Earth"))
+
+
+def ask_execution(prompt, retries=3, reminder='Please select one available option'):
+    """Function to select the exercise to run."""
+    options = {0: defining_and_calling_functions,
+               1: default_argument_values,
+               2: default_mutable_object,
+               3: keyword_arguments,
+               4: keyword_arguments_advanced,
+               }
+
+    while True:
+        print("Select one of the available exercises to run:")
+        for i in range(5):
+            print("[%i]" % i, options[i].__doc__)
+
+        user_input = int(input(prompt))
+        if int(user_input) in range(5):
+            options[user_input]()
+            user_input = input("New execution?:")
+            if user_input in ('y', 'ye', 'yes'):
+                pass
+            elif user_input in ('n', 'no', 'nop', 'nope'):
+                return False
+            else:
+                raise ValueError("invalid user response: must be 'yes' or 'no'")
+        else:
+            print("The chosen it's invalid")
+            retries = retries - 1
+        if retries < 0:
+            raise ValueError("invalid user response")
+        print(reminder)
+
+
+ask_execution('Enter your option:')
+
